@@ -4,6 +4,7 @@ import (
 	"html/template"
 	"io"
 
+	"github.com/dbrudner/go-qr-code-gen/internal/db"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
@@ -23,20 +24,21 @@ func newTemplates() *Templates {
 	return t
 }
 
-type Count struct {
-	Count int
+type PageData struct {
+	Site string
 }
 
 func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
-
-	count := Count{Count: 0}
+	db.Init("db.sqlite")
+	db.CreateTables()
+	db.SeedData()
+	pageData := PageData{Site: "Mysite.com"}
 	e.Renderer = newTemplates()
 
 	e.GET("/", func(c echo.Context) error {
-		count.Count++
-		return c.Render(200, "index.html", count)
+		return c.Render(200, "index.html", pageData)
 	})
 
 	e.Logger.Fatal(e.Start(":3005"))

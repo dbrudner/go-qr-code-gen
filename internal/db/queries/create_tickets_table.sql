@@ -1,0 +1,10 @@
+CREATE TABLE IF NOT EXISTS tickets (
+    id SERIAL PRIMARY KEY,
+    site_id INTEGER NOT NULL,
+    FOREIGN KEY (site_id) REFERENCES sites (id),
+    user_id INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users (id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    content TEXT NOT NULL
+);
