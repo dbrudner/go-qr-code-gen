@@ -1,58 +1,33 @@
 package db
 
 import (
+	"fmt"
 	"log"
+	"os"
 )
 
-func createUserTable() {
-	createUserTableSQL := `
-    CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT NOT NULL UNIQUE
-);`
-
-	_, err := DB.Exec(createUserTableSQL)
+func executeSQLFromFile(filename string) {
+	// Read SQL file
+	sqlBytes, err := os.ReadFile(filename)
 	if err != nil {
-		log.Fatalf("Failed to create users table: %v", err)
+		log.Fatalf("Failed to read SQL file: %v", err)
 	}
-}
 
-func createSiteTable() {
-	createSiteTableSQL := `
-    CREATE TABLE IF NOT EXISTS sites (
-      id SERIAL PRIMARY KEY,
-      name TEXT NOT NULL UNIQUE,
-      url TEXT NOT NULL UNIQUE,
-    );`
+	// Convert to string
+	sql := string(sqlBytes)
 
-	_, err := DB.Exec(createSiteTableSQL)
+	fmt.Println("sql:", sql)
+	// Execute SQL
+	_, err = DB.Exec(sql)
 	if err != nil {
-		log.Fatalf("Failed to create sites table: %v", err)
-	}
-}
-
-func createTicketTable() {
-	createTicketTableSQL := `
-    CREATE TABLE IF NOT EXISTS tickets (
-      id SERIAL PRIMARY KEY,
-      site_id INTEGER NOT NULL,
-      FOREIGN KEY (site_id) REFERENCES sites(id),
-      user_id INTEGER NOT NULL  ,
-      FOREIGN KEY (user_id) REFERENCES users(id),
-      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-      content TEXT NOT NULL,
-    );`
-	_, err := DB.Exec(createTicketTableSQL)
-	if err != nil {
-		log.Fatalf("Failed to create tickets table: %v", err)
+		log.Fatalf("Failed to execute SQL: %v", err)
 	}
 }
 
 func CreateTables() {
-	createUserTable()
-	createSiteTable()
-	createTicketTable()
+	executeSQLFromFile("internal/db/queries/create_users_table.sql")
+	executeSQLFromFile("internal/db/queries/create_sites_table.sql")
+	executeSQLFromFile("internal/db/queries/create_tickets_table.sql")
 }
 
 type User = struct {
