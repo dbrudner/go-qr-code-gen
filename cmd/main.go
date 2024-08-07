@@ -33,7 +33,7 @@ func main() {
 	e.Use(middleware.Logger())
 	db.Init("db.sqlite")
 	db.CreateTables()
-	db.SeedData()
+	// db.SeedData()
 	pageData := PageData{Site: "Mysite.com"}
 	e.Renderer = newTemplates()
 
