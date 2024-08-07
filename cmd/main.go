@@ -31,6 +31,7 @@ type PageData struct {
 func main() {
 	e := echo.New()
 	e.Use(middleware.Logger())
+	e.Static("/public", "./public")
 	db.Init("db.sqlite")
 	db.CreateTables()
 	// db.SeedData()
