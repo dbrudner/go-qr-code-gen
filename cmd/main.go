@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
 	"io"
 
@@ -24,7 +25,7 @@ func newTemplates() *Templates {
 	return t
 }
 
-type PageData struct {
+type SiteData struct {
 	Site string
 }
 
@@ -34,12 +35,24 @@ func main() {
 	e.Static("/public", "./public")
 	db.Init("db.sqlite")
 	db.CreateTables()
-	// db.SeedData()
-	pageData := PageData{Site: "Mysite.com"}
+	db.SeedData()
 	e.Renderer = newTemplates()
 
 	e.GET("/", func(c echo.Context) error {
-		return c.Render(200, "index.html", pageData)
+		return c.Render(200, "index.html", nil)
+	})
+
+	e.GET("/site/new", func(c echo.Context) error {
+		return c.Render(200, "new-site-form.html", nil)
+	})
+
+	e.POST("/site/new", func(c echo.Context) error {
+		site := c.FormValue("site")
+
+		html := fmt.Sprintf("<p>hurray %s</p>", site)
+
+		return c.HTML(200, html)
+		// return c.Render(200, "new-site.html", siteData)
 	})
 
 	e.Logger.Fatal(e.Start(":3005"))

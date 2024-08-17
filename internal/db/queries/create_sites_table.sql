@@ -1,5 +1,0 @@
-CREATE TABLE IF NOT EXISTS sites (
-    id TEXT PRIMARY KEY,
-    description TEXT NOT NULL UNIQUE,
-    url TEXT NOT NULL UNIQUE
-);

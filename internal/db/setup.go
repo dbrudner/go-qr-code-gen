@@ -24,10 +24,31 @@ func executeSQLFromFile(filename string) {
 	}
 }
 
+func createUsersTable() {
+	_, err := DB.Exec("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, email TEXT)")
+	if err != nil {
+		log.Fatalf("Failed to create users table: %v", err)
+	}
+}
+
+func createTicketsTable() {
+	_, err := DB.Exec("CREATE TABLE IF NOT EXISTS tickets (id TEXT PRIMARY KEY, site_id INTEGER NOT NULL, user_id INTEGER NOT NULL, created_at TIMESTAMP DEFAULT current_timestamp, updated_at TIMESTAMP DEFAULT current_timestamp, content TEXT NOT NULL)")
+	if err != nil {
+		log.Fatalf("Failed to create tickets table: %v", err)
+	}
+}
+
+func createSitesTable() {
+	_, err := DB.Exec("CREATE TABLE IF NOT EXISTS sites ( id TEXT PRIMARY KEY, description TEXT NOT NULL UNIQUE, url TEXT NOT NULL UNIQUE)")
+	if err != nil {
+		log.Fatalf("Failed to create sites table: %v", err)
+	}
+}
+
 func CreateTables() {
-	executeSQLFromFile("internal/db/queries/create_users_table.sql")
-	executeSQLFromFile("internal/db/queries/create_sites_table.sql")
-	executeSQLFromFile("internal/db/queries/create_tickets_table.sql")
+	createUsersTable()
+	createSitesTable()
+	createTicketsTable()
 }
 
 type User = struct {
