@@ -5,3 +5,4 @@
 /bin/
 *.sqlite
 /public/
+/views/**/*.go
