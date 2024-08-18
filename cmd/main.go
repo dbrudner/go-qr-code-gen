@@ -23,5 +23,12 @@ func main() {
 
 	homeHandler := handler.HomeHandler{}
 	e.GET("/", homeHandler.HandleHomeShow)
+
+	sitesHandler := handler.SiteHandler{}
+
+	e.GET("/site", sitesHandler.HandleSiteCollection)
+	e.GET("/site/:id", sitesHandler.HandleSiteDetail)
+	e.GET("/site/new", sitesHandler.HandleNewSite)
+	e.POST("/site/new", sitesHandler.HandleCreateSite)
 	e.Logger.Fatal(e.Start(":3005"))
 }

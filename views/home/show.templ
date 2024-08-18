@@ -2,9 +2,10 @@ package home
 
 import "github.com/dbrudner/go-qr-code-gen/views/layout"
 
-
 templ Show() {
-  @layout.Base() {
-    <h1>Hello</h1>
-  }
+	@layout.Base("Home Page") {
+		<div class="text-slate-300 bg-cyan-400">
+			<a href="/sites">Sites</a>
+		</div>
+	}
 }

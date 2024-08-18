@@ -1,0 +1,12 @@
+package home
+
+import "github.com/dbrudner/go-qr-code-gen/views/layout"
+
+templ All() {
+	@layout.Base("View all tickets for a site") {
+		<div class="text-slate-300 bg-cyan-400">
+			<label for="input">Enter text to generate QR Code</label>
+			<input type="text" id="input"/>
+		</div>
+	}
+}
