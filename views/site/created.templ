@@ -1,7 +1,8 @@
-package site
+package siteView
 
-templ Created(url string) {
+templ Created(url string, description string) {
 	<div class="text-slate-300 bg-cyan-400">
 		Created { url }
+		<p>{ description }</p>
 	</div>
 }

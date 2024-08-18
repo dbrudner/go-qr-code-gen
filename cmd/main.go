@@ -29,6 +29,6 @@ func main() {
 	e.GET("/site", sitesHandler.HandleSiteCollection)
 	e.GET("/site/:id", sitesHandler.HandleSiteDetail)
 	e.GET("/site/new", sitesHandler.HandleNewSite)
-	e.POST("/site/new", sitesHandler.HandleCreateSite)
+	e.POST("site/new", sitesHandler.HandleCreateSite)
 	e.Logger.Fatal(e.Start(":3005"))
 }
