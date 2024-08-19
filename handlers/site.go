@@ -11,11 +11,21 @@ import (
 type SiteHandler struct{}
 
 func (h SiteHandler) HandleSiteDetail(c echo.Context) error {
-	return render(c, siteView.Detail())
+	siteID := c.Param("id")
+
+	site, err := site.GetSite(siteID)
+	if err != nil {
+		fmt.Println("Error")
+	}
+	return render(c, siteView.Detail(*site))
 }
 
 func (h SiteHandler) HandleSiteCollection(c echo.Context) error {
-	return render(c, siteView.Collection())
+	sites, err := site.GetSites()
+	if err != nil {
+		fmt.Println("Error")
+	}
+	return render(c, siteView.Collection(sites))
 }
 
 func (h SiteHandler) HandleNewSite(c echo.Context) error {

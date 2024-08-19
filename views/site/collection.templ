@@ -1,11 +1,28 @@
 package siteView
 
-import "github.com/dbrudner/go-qr-code-gen/views/layout"
+import (
+	"github.com/dbrudner/go-qr-code-gen/internal/site"
+	"github.com/dbrudner/go-qr-code-gen/views/layout"
+)
 
-templ Collection() {
-	@layout.Base("List of sites") {
+func createSiteHref(site site.Site) string {
+	return "/site/" + site.ID
+}
+
+templ Collection(sites []site.Site) {
+	@layout.Base("List of sites hey") {
 		<div class="text-slate-300 bg-cyan-400">
 			<a href="/sites">Sites</a>
+			<ul>
+				for _, site := range sites {
+					<li>
+						<a href={ templ.URL("/site/" + site.ID) }>
+							<p class="text-slate-300">{ site.Description }</p>
+							<p>{ site.URL }</p>
+						</a>
+					</li>
+				}
+			</ul>
 		</div>
 	}
 }

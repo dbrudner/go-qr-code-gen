@@ -39,7 +39,7 @@ func createTicketsTable() {
 }
 
 func createSitesTable() {
-	_, err := DB.Exec("CREATE TABLE IF NOT EXISTS sites ( id TEXT PRIMARY KEY, description TEXT NOT NULL , url TEXT NOT NULL UNIQUE)")
+	_, err := DB.Exec("CREATE TABLE IF NOT EXISTS sites (id TEXT PRIMARY KEY, description TEXT NOT NULL, url TEXT NOT NULL UNIQUE)")
 	if err != nil {
 		log.Fatalf("Failed to create sites table: %v", err)
 	}

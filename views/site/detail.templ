@@ -1,11 +1,14 @@
 package siteView
 
-import "github.com/dbrudner/go-qr-code-gen/views/layout"
+import (
+	"github.com/dbrudner/go-qr-code-gen/internal/site"
+	"github.com/dbrudner/go-qr-code-gen/views/layout"
+)
 
-templ Detail() {
-	@layout.Base("Site detail page") {
+templ Detail(site site.Site) {
+	@layout.Base(site.Description) {
 		<div class="text-slate-300 bg-cyan-400">
-			hey
+			URL: { site.URL }
 		</div>
 	}
 }
