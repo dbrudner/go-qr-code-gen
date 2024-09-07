@@ -60,5 +60,12 @@ func (h TicketHandler) HandleTicketDetail(c echo.Context) error {
 		fmt.Println("Error finding site")
 	}
 
-	return render(c, ticketView.Detail(site.URL))
+	ticket, err := ticket.GetTicket(ticketID)
+	if err != nil {
+		fmt.Println("Error finding ticket")
+	}
+
+	siteWithTicketIdQueryParam := fmt.Sprintf("%s&ticketId=%s", site.URL, ticket.ID)
+
+	return render(c, ticketView.Detail(site.URL, siteWithTicketIdQueryParam))
 }

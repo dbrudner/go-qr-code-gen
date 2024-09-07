@@ -2,8 +2,18 @@ package siteView
 
 import "github.com/dbrudner/go-qr-code-gen/views/layout"
 
-templ Detail(url string) {
+templ Detail(url string, ticket string) {
 	@layout.Base(createHeader(url)) {
-		<div>Ticket detail apge</div>
+		<div>
+			Ticket detail apge
+			<div id="qrcode"></div>
+			<div data-ticket={ ticket }></div>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+			<script type="text/javascript">
+    const ticket = document.querySelector("[data-ticket]").getAttribute("data-ticket");
+    console.log(ticket)
+    new QRCode(document.getElementById("qrcode"), ticket);
+  </script>
+		</div>
 	}
 }
