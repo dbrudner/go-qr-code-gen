@@ -10,9 +10,10 @@ func createSiteHref(site site.Site) string {
 }
 
 templ Collection(sites []site.Site) {
-	@layout.Base("List of sites hey") {
+	@layout.Base("Sites") {
 		<div class="text-slate-300 bg-cyan-400">
 			<a href="/sites">Sites</a>
+			asdf
 			<ul>
 				for _, site := range sites {
 					<li>

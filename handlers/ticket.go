@@ -46,8 +46,6 @@ func (h TicketHandler) HandleCreateTicket(c echo.Context) error {
 
 	fmt.Printf("Created new ticket: %s", newTicket.ID)
 	return render(c, home.Show())
-	// return render(c, ticketView.New(*site))
-	// return render(c, ticketView.New(*site))
 }
 
 func (h TicketHandler) HandleTicketDetail(c echo.Context) error {
