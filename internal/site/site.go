@@ -5,3 +5,11 @@ type Site struct {
 	Description string
 	URL         string
 }
+
+func (s Site) GetURL() string {
+	return s.URL
+}
+
+type URLHolder interface {
+	GetURL() string
+}

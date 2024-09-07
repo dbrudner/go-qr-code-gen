@@ -23,12 +23,15 @@ func main() {
 
 	homeHandler := handler.HomeHandler{}
 	sitesHandler := handler.SiteHandler{}
+	ticketHandler := handler.TicketHandler{}
 
 	e.GET("/", homeHandler.HandleHomeShow)
 	e.GET("/sites", sitesHandler.HandleSiteCollection)
 	e.GET("/site/:id", sitesHandler.HandleSiteDetail)
 	e.GET("/site/new", sitesHandler.HandleNewSite)
-	e.POST("site/new", sitesHandler.HandleCreateSite)
+	e.GET("/site/:id/ticket/new", ticketHandler.HandleNewTicket)
+	e.POST("/site/new", sitesHandler.HandleCreateSite)
+	e.POST("/site/:id/ticket/new", ticketHandler.HandleCreateTicket)
 
 	e.Logger.Fatal(e.Start(":3005"))
 }

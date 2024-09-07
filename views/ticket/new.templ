@@ -1,12 +1,37 @@
-package home
+package siteView
 
-import "github.com/dbrudner/go-qr-code-gen/views/layout"
+import (
+	"fmt"
+	"github.com/dbrudner/go-qr-code-gen/internal/site"
+	"github.com/dbrudner/go-qr-code-gen/views/layout"
+)
 
-templ All() {
-	@layout.Base("View all tickets for a site") {
-		<div class="text-slate-300 bg-cyan-400">
-			<label for="input">Enter text to generate QR Code</label>
-			<input type="text" id="input"/>
-		</div>
+func createHeader(str string) string {
+	return fmt.Sprintf("Create a ticket for %s", str)
+}
+
+func createPostURL(siteId string) string {
+	return fmt.Sprintf("/site/%/ticket/new", siteId)
+}
+
+type URLHolder interface {
+	GetURL() string
+}
+
+templ New(s site.Site) {
+	@layout.Base(createHeader(s.URL)) {
+		<form hx-post={ createPostURL(s.URL) }>
+			<div class="mb-6">
+				<label for="notes" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Notes</label>
+				<textarea
+					lines="4"
+					type="text"
+					id="notes"
+					name="notes"
+					class="block w-full p-4 text-gray-900 border border-gray-300 rounded-lg bg-gray-50 text-base focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+				></textarea>
+			</div>
+			<button type="submit" class="bg-lime-600 text-white rounded-lg p-2">Submit</button>
+		</form>
 	}
 }
