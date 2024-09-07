@@ -10,8 +10,9 @@ func createHeader(str string) string {
 	return fmt.Sprintf("Create a ticket for %s", str)
 }
 
-func createPostURL(siteId string) string {
-	return fmt.Sprintf("/site/%/ticket/new", siteId)
+func getPostURL(siteId string) string {
+	fmt.Println(siteId)
+	return fmt.Sprintf("/site/%s/ticket/new", siteId)
 }
 
 type URLHolder interface {
@@ -20,7 +21,9 @@ type URLHolder interface {
 
 templ New(s site.Site) {
 	@layout.Base(createHeader(s.URL)) {
-		<form hx-post={ createPostURL(s.URL) }>
+		<form hx-post={ getPostURL(s.URL) }>
+			<input type="hidden" name="siteId" value={ s.ID }/>
+			<p>{ getPostURL(s.URL) } </p>
 			<div class="mb-6">
 				<label for="notes" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Notes</label>
 				<textarea

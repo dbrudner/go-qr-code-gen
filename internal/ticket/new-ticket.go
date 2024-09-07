@@ -1,0 +1,20 @@
+package ticket
+
+import (
+	"fmt"
+
+	"github.com/dbrudner/go-qr-code-gen/internal/db"
+	"github.com/google/uuid"
+)
+
+func NewTicket(siteId string, userId string, content string) (*Ticket, error) {
+	id := uuid.New()
+
+	query := `INSERT INTO tickets (id, site_id, user_id, content) VALUES (?, ?, ?, ?)`
+	_, err := db.DB.Exec(query, id, siteId, userId, content)
+	if err != nil {
+		return nil, fmt.Errorf("failed to insert new ticket: %w", err)
+	}
+
+	return &Ticket{}, nil
+}

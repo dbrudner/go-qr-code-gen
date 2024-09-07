@@ -1,0 +1,9 @@
+package siteView
+
+import "github.com/dbrudner/go-qr-code-gen/views/layout"
+
+templ Detail(url string) {
+	@layout.Base(createHeader(url)) {
+		<div>Ticket detail apge</div>
+	}
+}

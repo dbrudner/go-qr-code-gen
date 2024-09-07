@@ -30,6 +30,7 @@ func main() {
 	e.GET("/site/:id", sitesHandler.HandleSiteDetail)
 	e.GET("/site/new", sitesHandler.HandleNewSite)
 	e.GET("/site/:id/ticket/new", ticketHandler.HandleNewTicket)
+	e.GET("site/:id/ticket/:ticketId", ticketHandler.HandleTicketDetail)
 	e.POST("/site/new", sitesHandler.HandleCreateSite)
 	e.POST("/site/:id/ticket/new", ticketHandler.HandleCreateTicket)
 
