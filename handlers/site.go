@@ -40,7 +40,7 @@ func (h SiteHandler) HandleCreateSite(c echo.Context) error {
 	if err != nil {
 		fmt.Println("Error")
 		fmt.Println(err)
-		return render(c, siteView.New())
+		return c.HTML(500, "<div>ohno</div>")
 	}
 
 	fmt.Println(newSiteURL)

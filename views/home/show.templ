@@ -3,10 +3,37 @@ package home
 import "github.com/dbrudner/go-qr-code-gen/views/layout"
 
 templ Show() {
-	@layout.Base("Home Page") {
-		<div class="text-slate-300 bg-cyan-400">
-			<a href="/site/new">New Site</a>
-			<a href="/sites">Sites</a>
+	@layout.Base("") {
+		<div class="bg-black min-h-screen flex flex-col">
+			<main class="flex-grow container mx-auto px-4 py-8">
+				<div class="max-w-md mx-auto bg-gray-900 rounded-lg shadow-lg p-6 border border-purple-500">
+					<h2 class="text-2xl font-semibold text-purple-300 mb-6">Welcome to Yeet</h2>
+					<p class="text-purple-200 mb-8">
+						Generate QR codes with tracking links
+						to websites
+					</p>
+					<div class="space-y-4">
+						<a
+							href="/sites"
+							class="block w-full bg-purple-600 text-white text-center px-4 py-2 rounded-md hover:bg-purple-500 transition duration-300 font-semibold"
+						>
+							View Sites
+						</a>
+						<a
+							href="/site/new"
+							class="block w-full bg-gray-800 text-purple-300 text-center px-4 py-2 rounded-md hover:bg-gray-700 transition duration-300 border border-purple-500"
+						>
+							Create New Site
+						</a>
+					</div>
+				</div>
+			</main>
+			<footer class="bg-gray-900 py-4 mt-8">
+				<div class="container mx-auto px-4 text-center text-purple-400 text-sm">
+					© 2023 Site Manager. All rights reserved.
+					asdf
+				</div>
+			</footer>
 		</div>
 	}
 }

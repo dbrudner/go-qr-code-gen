@@ -14,10 +14,9 @@ func createTicketHref(site site.Site) string {
 }
 
 templ Collection(sites []site.Site) {
-	@layout.Base("Sites asdf") {
-		<div class="bg-black min-h-screen p-6">
-			<div class="max-w-2xl mx-auto">
-				<h1 class="text-3xl font-bold mb-6 text-purple-400">Website List</h1>
+	@layout.Base("Sites") {
+		<div class="bg-black min-h-screen">
+			<div class="mx-auto">
 				<form
 					hx-post="/site/new"
 					hx-target="#new-sites"

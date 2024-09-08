@@ -7,7 +7,6 @@ import (
 
 	site "github.com/dbrudner/go-qr-code-gen/internal/site"
 	"github.com/dbrudner/go-qr-code-gen/internal/ticket"
-	"github.com/dbrudner/go-qr-code-gen/views/home"
 	ticketView "github.com/dbrudner/go-qr-code-gen/views/ticket"
 )
 
@@ -45,7 +44,9 @@ func (h TicketHandler) HandleCreateTicket(c echo.Context) error {
 	}
 
 	fmt.Printf("Created new ticket: %s", newTicket.ID)
-	return render(c, home.Show())
+	return c.Redirect(200, fmt.Sprintf("/site/%s/ticket/%s", siteID, newTicket.ID))
+
+	// return render(c, home.Show())
 }
 
 func (h TicketHandler) HandleTicketDetail(c echo.Context) error {
