@@ -1,0 +1,30 @@
+package siteView
+
+import "github.com/dbrudner/go-qr-code-gen/internal/site"
+
+templ SiteItem(site site.Site) {
+	<li class="bg-gray-900 rounded-lg shadow-lg p-4 flex items-center justify-between border border-purple-500">
+		<div class="flex-grow">
+			<h2 class="text-xl font-semibold text-purple-300">Example Website</h2>
+			<a
+				href={ templ.SafeURL(site.URL) }
+				target="_blank"
+				rel="noopener noreferrer"
+				class="text-purple-400 hover:text-purple-300 transition duration-300"
+			>{ site.URL }</a>
+		</div>
+		<div class="flex items-center space-x-2">
+			<a
+				href={ templ.SafeURL(createTicketHref(site)) }
+				class="bg-purple-600 text-white px-4 py-2 rounded-md hover:bg-purple-500 transition duration-300 font-semibold"
+				title="Generate Ticket"
+			>Create Ticket</a>
+			<a
+				href={ templ.SafeURL(createSiteHref(site)) }
+				class="bg-gray-800 text-purple-300 px-3 py-2 rounded-md hover:bg-gray-700 transition duration-300 text-center"
+			>
+				View Site Detail
+			</a>
+		</div>
+	</li>
+}

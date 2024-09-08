@@ -44,5 +44,10 @@ func (h SiteHandler) HandleCreateSite(c echo.Context) error {
 	}
 
 	fmt.Println(newSiteURL)
-	return render(c, siteView.Created(newSite.URL, newSite.Description))
+	site, err := site.GetSite(newSite.ID)
+	if err != nil {
+		fmt.Println("Error")
+	}
+
+	return render(c, siteView.SiteItem(*site))
 }
