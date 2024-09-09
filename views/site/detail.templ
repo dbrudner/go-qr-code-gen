@@ -15,6 +15,7 @@ templ Detail(s ticket.SiteWithTickets) {
 					target="_blank"
 					rel="noopener noreferrer"
 					class="text-purple-400 hover:text-purple-300 transition duration-300 text-lg"
+					data-site-url={ s.Site.URL }
 				>
 					{ s.Site.URL }
 				</a>
@@ -63,8 +64,9 @@ templ Detail(s ticket.SiteWithTickets) {
       for (ticketIdEl of ticketIdEls) {
         const ticketId = ticketIdEl.getAttribute('data-ticket-id');
         const content = ticketIdEl.querySelector('div').getAttribute('data-ticket-content');
-
-        new QRCode(ticketIdEl, ticketId);
+        const siteUrl = document.querySelector('[data-site-url]').getAttribute('data-site-url');
+        const qrCodeContent = `${siteUrl}?ticketId=${ticketId}`;
+        new QRCode(ticketIdEl, qrCodeContent);
         console.log(ticketId)
         console.log(content)
       }
