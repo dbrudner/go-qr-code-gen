@@ -7,7 +7,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func NewTicket(siteId string, userId string, content string) (*Ticket, error) {
+func NewTicket(siteId string, userId int, content string) (*Ticket, error) {
 	id := uuid.New()
 
 	query := `INSERT INTO tickets (id, site_id, user_id, content) VALUES (?, ?, ?, ?)`
@@ -24,7 +24,7 @@ func GetTicket(id string) (*Ticket, error) {
 	row := db.DB.QueryRow(query, id)
 
 	var t Ticket
-	err := row.Scan(&t.ID, &t.Site_ID, &t.User_ID, &t.Content)
+	err := row.Scan(&t.ID, &t.SiteID, &t.UserID, &t.Content)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get ticket: %w", err)
 	}

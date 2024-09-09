@@ -37,7 +37,7 @@ func (h TicketHandler) HandleCreateTicket(c echo.Context) error {
 	}
 
 	newTicket, err := ticket.NewTicket(
-		siteID, "my-user-id", newTicketNotes)
+		siteID, 1, newTicketNotes)
 	if err != nil {
 		fmt.Println("Error creating ticket")
 		return err

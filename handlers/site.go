@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	site "github.com/dbrudner/go-qr-code-gen/internal/site"
+	"github.com/dbrudner/go-qr-code-gen/internal/ticket"
 	siteView "github.com/dbrudner/go-qr-code-gen/views/site"
 	"github.com/labstack/echo/v4"
 )
@@ -12,12 +13,15 @@ type SiteHandler struct{}
 
 func (h SiteHandler) HandleSiteDetail(c echo.Context) error {
 	siteID := c.Param("id")
-
-	site, err := site.GetSite(siteID)
+	siteWithTickets, err := ticket.GetSiteWithTickets(siteID)
 	if err != nil {
-		fmt.Println("Error")
+		fmt.Println(err)
+		fmt.Println("Oh shit")
 	}
-	return render(c, siteView.Detail(*site))
+
+	fmt.Println(len(siteWithTickets.Tickets))
+
+	return render(c, siteView.Detail(*siteWithTickets))
 }
 
 func (h SiteHandler) HandleSiteCollection(c echo.Context) error {

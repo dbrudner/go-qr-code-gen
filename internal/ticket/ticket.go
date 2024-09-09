@@ -1,10 +1,12 @@
 package ticket
 
 type Ticket struct {
-	ID      string
-	Site_ID string
-	User_ID string
-	Content string
+	ID        string
+	UserID    int
+	CreatedAt string
+	UpdatedAt string
+	Content   string
+	SiteID    string
 }
 
 func (t Ticket) GetID() string {

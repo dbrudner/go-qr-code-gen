@@ -25,7 +25,12 @@ func executeSQLFromFile(filename string) {
 }
 
 func createUsersTable() {
-	_, err := DB.Exec("CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY, name TEXT, email TEXT)")
+	_, err := DB.Exec(`
+			CREATE TABLE IF NOT EXISTS users (
+				id INTEGER PRIMARY KEY,
+				name TEXT,
+				email TEXT
+			)`)
 	if err != nil {
 		log.Fatalf("Failed to create users table: %v", err)
 	}
