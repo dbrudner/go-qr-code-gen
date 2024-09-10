@@ -40,7 +40,7 @@ templ Detail(s ticket.SiteWithTickets) {
 								<div class="flex flex-col md:flex-row md:justify-between mb-2">
 									<h2 class="text-xl font-semibold text-purple-300">Example Title</h2>
 									<p class="text-sm text-purple-400">
-										Created: { ticket.CreatedAt }
+										Created: { ticket.CreatedAt.Format("2006-01-02") }
 									</p>
 								</div>
 								<p class="text-purple-200 mb-4">{ ticket.Content }</p>

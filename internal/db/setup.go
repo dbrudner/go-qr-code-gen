@@ -50,10 +50,25 @@ func createSitesTable() {
 	}
 }
 
+func createScansTable() {
+	_, err := DB.Exec(`
+  CREATE TABLE IF NOT EXISTS scans (
+   id INTEGER PRIMARY KEY AUTOINCREMENT,
+   ticket_id TEXT NOT NULL,
+   created_at TIMESTAMP DEFAULT current_timestamp,
+   fingerprint TEXT NOT NULL,
+   FOREIGN KEY (ticket_id) REFERENCES tickets(id)
+  )`)
+	if err != nil {
+		log.Fatalf("Failed to create scans table: %v", err)
+	}
+}
+
 func CreateTables() {
 	createUsersTable()
 	createSitesTable()
 	createTicketsTable()
+	createScansTable()
 }
 
 type User = struct {

@@ -47,7 +47,7 @@ templ Detail(ticket ticket.Ticket, siteURL string) {
 						</div>
 						<div class="flex-grow">
 							<h1 class="text-2xl font-bold text-purple-300 mb-2">Ticket { ticket.ID }</h1>
-							<p class="text-purple-400 mb-2">Created on: { ticket.CreatedAt }</p>
+							<p class="text-purple-400 mb-2">Created on: { ticket.CreatedAt.Format(time.RFC3339) }</p>
 							<p class="text-purple-400">Total Scans: 4</p>
 						</div>
 					</div>
