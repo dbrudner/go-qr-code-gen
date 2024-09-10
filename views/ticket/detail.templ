@@ -68,10 +68,10 @@ templ Detail(ticket ticket.Ticket, siteURL string) {
 									</tr>
 								</thead>
 								<tbody>
-									for i, scan := range mockScans {
+									for i, scan := range ticket.Scans {
 										<tr class="border-t border-purple-700">
 											<td class="px-4 py-2">{ strconv.Itoa(i + 1) }</td>
-											<td class="px-4 py-2">{ scan.Time.Format("2006-01-02 15:04:05") }</td>
+											<td class="px-4 py-2">{ scan.CreatedAt.Format("2006-01-02 15:04:05") }</td>
 										</tr>
 									}
 								</tbody>
