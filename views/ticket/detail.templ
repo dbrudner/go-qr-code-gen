@@ -27,10 +27,10 @@ templ Detail(ticket ticket.Ticket, siteURL string) {
 					<span class="text-purple-300">Ticket { ticket.ID }</span>
 				</div>
 				<div class="bg-gray-900 rounded-lg shadow-lg p-6 border border-purple-500 mb-6">
-					<div class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6 mb-6">
-						<div class="flex-shrink-0">
+					<div class="flex flex-col md:flex-row items-center space-y-4 md:space-y-0 md:space-x-6 mb-6">
+						<div class="flex-shrink-0 mr-4">
 							<div id="qrcode"></div>
-							<div id={ ticket.ID } data-ticket-id={ ticket.ID }>
+							<div id={ ticket.ID } class="mr-4 w-24 border-4 border-purple-500 shadow-lg shadow-purple-500/50 rounded-lg p-1 bg-gradient-to-br from-purple-600 to-yellow-500 p-3" data-ticket-id={ ticket.ID }>
 								<div data-ticket-content={ ticket.Content }></div>
 								<div data-site-url={ siteURL }></div>
 							</div>
