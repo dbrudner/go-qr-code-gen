@@ -12,18 +12,6 @@ import (
 
 type TicketHandler struct{}
 
-// for handling page GET route
-func (h TicketHandler) HandleNewTicket(c echo.Context) error {
-	siteID := c.Param("id")
-	fmt.Println("hey")
-	site, err := site.GetSite(siteID)
-	if err != nil {
-		fmt.Println("Error")
-	}
-	fmt.Println(site.GetURL())
-	return render(c, ticketView.New(*site))
-}
-
 // For handling form/POST route
 func (h TicketHandler) HandleCreateTicket(c echo.Context) error {
 	newTicketContent := c.FormValue("content")
@@ -47,18 +35,19 @@ func (h TicketHandler) HandleCreateTicket(c echo.Context) error {
 
 	fmt.Printf("Created new ticket: %s", newTicket.ID)
 	return c.Redirect(301, fmt.Sprintf("/site/%s/ticket/%s", siteID, newTicket.ID))
-
-	// return render(c, home.Show())
 }
 
 func (h TicketHandler) HandleTicketDetail(c echo.Context) error {
 	siteID := c.Param("id")
-	ticketID := c.Param("ticketId")
-	fmt.Println(siteID)
-	fmt.Println(ticketID)
 	site, err := site.GetSite(siteID)
 	if err != nil {
 		fmt.Println("Error finding site")
+	}
+
+	ticketID := c.Param("ticketId")
+	fmt.Println(ticketID, "ticketID")
+	if ticketID == "new" {
+		return render(c, ticketView.New(*site))
 	}
 
 	ticket, err := ticket.GetTicket(ticketID)
@@ -66,7 +55,6 @@ func (h TicketHandler) HandleTicketDetail(c echo.Context) error {
 		fmt.Println("Error finding ticket")
 	}
 
-	siteWithTicketIdQueryParam := fmt.Sprintf("%s&ticketId=%s", site.URL, ticket.ID)
-
-	return render(c, ticketView.Detail(site.URL, siteWithTicketIdQueryParam))
+	fmt.Println("rendering detail view")
+	return render(c, ticketView.Detail(*ticket, site.URL))
 }

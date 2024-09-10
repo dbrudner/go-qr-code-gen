@@ -1,60 +1,52 @@
 package ticket
 
 import (
-	"fmt"
-	"github.com/dbrudner/go-qr-code-gen/internal/site"
-	"github.com/dbrudner/go-qr-code-gen/views/layout"
+"fmt"
+"github.com/dbrudner/go-qr-code-gen/internal/site"
+"github.com/dbrudner/go-qr-code-gen/views/layout"
 )
 
 func createHeader(str string) string {
-	return fmt.Sprintf("Create a ticket for %s", str)
+return fmt.Sprintf("Create asdfa ticket for %s", str)
 }
 
 func getPostURL(siteID string) templ.SafeURL {
-	fmt.Println(siteID)
-	return templ.SafeURL(fmt.Sprintf("/site/%s/ticket/new", siteID))
+fmt.Println(siteID)
+return templ.SafeURL(fmt.Sprintf("/site/%s/ticket/new", siteID))
 }
 
 type URLHolder interface {
-	GetURL() string
+GetURL() string
 }
 
 templ New(s site.Site) {
-	@layout.Base(createHeader(s.URL)) {
-		<div class="flex h-full items-center justify-center p-4">
-			<div class="w-full">
-				<form
-					method="POST"
-					action={ getPostURL(s.ID) }
-					class="bg-gray-900 shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 border border-purple-500"
-				>
-					<input type="hidden" value={ s.ID } name="siteID"/>
-					<div class="mb-4">
-						<label class="block text-purple-300 text-sm font-bold mb-2" htmlFor="content">
-							Content
-						</label>
-						<input
-							class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline bg-gray-800 border-purple-500 focus:border-purple-300"
-							id="content"
-							name="content"
-							type="text"
-							placeholder="Enter content for QR code"
-						/>
-						<p class="text-purple-400 text-xs italic mt-2">
-							Notes, times, places
-							etc
-						</p>
-					</div>
-					<div class="flex items-center justify-between">
-						<button
-							class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300"
-							type="submit"
-						>
-							Generate QR Code
-						</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	}
+@layout.Base(createHeader(s.URL)) {
+<div class="flex h-full items-center justify-center p-4">
+  <div class="w-full">
+    <form method="POST" action={ getPostURL(s.ID) }
+      class="bg-gray-900 shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 border border-purple-500">
+      <input type="hidden" value={ s.ID } name="siteID" />
+      <div class="mb-4">
+        <label class="block text-purple-300 text-sm font-bold mb-2" htmlFor="content">
+          Content
+        </label>
+        <input
+          class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline bg-gray-800 border-purple-500 focus:border-purple-300"
+          id="content" name="content" type="text" placeholder="Enter content for QR code" />
+        <p class="text-purple-400 text-xs italic mt-2">
+          Notes, times, places
+          etc
+        </p>
+      </div>
+      <div class="flex items-center justify-between">
+        <button
+          class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300"
+          type="submit">
+          Generate QR Code
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+}
 }

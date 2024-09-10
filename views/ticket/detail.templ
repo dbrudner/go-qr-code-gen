@@ -1,8 +1,90 @@
 package ticket
 
-import "github.com/dbrudner/go-qr-code-gen/views/layout"
+import (
+	"github.com/dbrudner/go-qr-code-gen/internal/ticket"
+	"github.com/dbrudner/go-qr-code-gen/views/layout"
+	"strconv"
+	"time"
+)
 
-templ Detail(url string, ticket string) {
+var mockScans = []struct {
+	Time time.Time
+}{
+	{Time: time.Now().Add(-time.Hour * 24)},
+	{Time: time.Now().Add(-time.Hour * 48)},
+	{Time: time.Now().Add(-time.Hour * 72)},
+	{Time: time.Now().Add(-time.Hour * 96)},
+}
+
+templ Detail(ticket ticket.Ticket, siteURL string) {
+	@layout.Base(("")) {
+		<div class="bg-black min-h-screen p-4">
+			<div class="max-w-4xl mx-auto">
+				<div class="text-purple-400 mb-4">
+					<a href="/" class="hover:text-purple-300">Home</a> /
+					<a href="/sites" class="hover:text-purple-300">Sites</a> /
+					<a href={ templ.SafeURL(siteURL) } class="hover:text-purple-300">{ siteURL }</a> /
+					<span class="text-purple-300">Ticket { ticket.ID }</span>
+				</div>
+				<div class="bg-gray-900 rounded-lg shadow-lg p-6 border border-purple-500 mb-6">
+					<div class="flex flex-col md:flex-row items-start md:items-center space-y-4 md:space-y-0 md:space-x-6 mb-6">
+						<div class="flex-shrink-0">
+							<div id="qrcode"></div>
+							<div id={ ticket.ID } data-ticket-id={ ticket.ID }>
+								<div data-ticket-content={ ticket.Content }></div>
+								<div data-site-url={ siteURL }></div>
+							</div>
+							<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+							<script type="text/javascript">
+							const ticketIdEl = document.querySelector("[data-ticket-id]");
+							const ticketId = ticketIdEl.getAttribute('data-ticket-id');
+        const content = ticketIdEl.querySelector('[data-ticket-content]').getAttribute('data-ticket-content');
+        const siteUrl = document.querySelector('[data-site-url]').getAttribute('data-site-url');
+        const qrCodeContent = `${siteUrl}?ticketId=${ticketId}`;
+        new QRCode(ticketIdEl, qrCodeContent);
+
+  </script>
+						</div>
+						<div class="flex-grow">
+							<h1 class="text-2xl font-bold text-purple-300 mb-2">Ticket { ticket.ID }</h1>
+							<p class="text-purple-400 mb-2">Created on: { ticket.CreatedAt }</p>
+							<p class="text-purple-400">Total Scans: 4</p>
+						</div>
+					</div>
+					<div class="mb-6">
+						<h2 class="text-xl font-semibold text-purple-300 mb-2">Content</h2>
+						<div class="bg-gray-800 p-4 rounded-lg border border-purple-600">
+							<pre class="text-purple-200 whitespace-pre-wrap">{ ticket.Content }</pre>
+						</div>
+					</div>
+					<div>
+						<h2 class="text-xl font-semibold text-purple-300 mb-2">Scan History</h2>
+						<div class="bg-gray-800 rounded-lg border border-purple-600 overflow-hidden">
+							<table class="w-full text-purple-200">
+								<thead class="bg-purple-900">
+									<tr>
+										<th class="px-4 py-2 text-left">Scan #</th>
+										<th class="px-4 py-2 text-left">Time</th>
+									</tr>
+								</thead>
+								<tbody>
+									for i, scan := range mockScans {
+										<tr class="border-t border-purple-700">
+											<td class="px-4 py-2">{ strconv.Itoa(i + 1) }</td>
+											<td class="px-4 py-2">{ scan.Time.Format("2006-01-02 15:04:05") }</td>
+										</tr>
+									}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	}
+}
+
+templ QrCode(url string, ticket string) {
 	@layout.Base(createHeader(url)) {
 		<div>
 			Ticket detail apge
