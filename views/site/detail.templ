@@ -5,6 +5,10 @@ import (
 	"github.com/dbrudner/go-qr-code-gen/views/layout"
 )
 
+func createTicketDetailsURL(siteID string, ticketID string) string {
+	return "/site/" + siteID + "/ticket/" + ticketID
+}
+
 templ Detail(s ticket.SiteWithTickets) {
 	@layout.Base(s.Site.URL) {
 		div class="bg-black min-h-screen p-6">
@@ -46,11 +50,12 @@ templ Detail(s ticket.SiteWithTickets) {
 									</span>
 								</div>
 								<div class="mt-4">
-									<button
+									<a
+										href={ templ.SafeURL(createTicketDetailsURL(s.Site.ID, ticket.ID)) }
 										class="bg-purple-600 hover:bg-purple-500 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition duration-300"
 									>
 										View Details
-									</button>
+									</a>
 								</div>
 							</div>
 						</div>

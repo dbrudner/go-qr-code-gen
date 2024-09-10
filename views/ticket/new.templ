@@ -10,9 +10,9 @@ func createHeader(str string) string {
 	return fmt.Sprintf("Create a ticket for %s", str)
 }
 
-func getPostURL(siteId string) templ.SafeURL {
-	fmt.Println(siteId)
-	return templ.SafeURL(fmt.Sprintf("/site/%s/ticket/new", siteId))
+func getPostURL(siteID string) templ.SafeURL {
+	fmt.Println(siteID)
+	return templ.SafeURL(fmt.Sprintf("/site/%s/ticket/new", siteID))
 }
 
 type URLHolder interface {
@@ -22,11 +22,13 @@ type URLHolder interface {
 templ New(s site.Site) {
 	@layout.Base(createHeader(s.URL)) {
 		<div class="flex h-full items-center justify-center p-4">
-			<div class="w-full max-w-md">
+			<div class="w-full">
 				<form
-					action={ getPostURL(s.URL) }
+					method="POST"
+					action={ getPostURL(s.ID) }
 					class="bg-gray-900 shadow-md rounded-lg px-8 pt-6 pb-8 mb-4 border border-purple-500"
 				>
+					<input type="hidden" value={ s.ID } name="siteID"/>
 					<div class="mb-4">
 						<label class="block text-purple-300 text-sm font-bold mb-2" htmlFor="content">
 							Content
@@ -34,6 +36,7 @@ templ New(s site.Site) {
 						<input
 							class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-200 leading-tight focus:outline-none focus:shadow-outline bg-gray-800 border-purple-500 focus:border-purple-300"
 							id="content"
+							name="content"
 							type="text"
 							placeholder="Enter content for QR code"
 						/>

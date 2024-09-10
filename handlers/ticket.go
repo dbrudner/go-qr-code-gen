@@ -26,25 +26,27 @@ func (h TicketHandler) HandleNewTicket(c echo.Context) error {
 
 // For handling form/POST route
 func (h TicketHandler) HandleCreateTicket(c echo.Context) error {
-	newTicketNotes := c.FormValue("notes")
-	fmt.Println(newTicketNotes)
-	siteID := c.Param("siteId")
+	newTicketContent := c.FormValue("content")
+	fmt.Println(newTicketContent, "content")
+	siteID := c.Param("id")
+	fmt.Println(siteID, "siteID")
 
 	// Check if site exists -- this should probalby be middleware driven
 	_, err := site.GetSite(siteID)
 	if err != nil {
 		fmt.Println("What the heck?")
+		return err
 	}
 
 	newTicket, err := ticket.NewTicket(
-		siteID, 1, newTicketNotes)
+		siteID, 1, newTicketContent)
 	if err != nil {
 		fmt.Println("Error creating ticket")
 		return err
 	}
 
 	fmt.Printf("Created new ticket: %s", newTicket.ID)
-	return c.Redirect(200, fmt.Sprintf("/site/%s/ticket/%s", siteID, newTicket.ID))
+	return c.Redirect(301, fmt.Sprintf("/site/%s/ticket/%s", siteID, newTicket.ID))
 
 	// return render(c, home.Show())
 }

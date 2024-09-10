@@ -12,13 +12,28 @@ type SiteWithTickets struct {
 	Tickets []Ticket
 }
 
+func NewSite() site.Site {
+	return site.Site{
+		ID:          "not found",
+		Description: "Hey there! This is a new site",
+		URL:         "https://www.google.com",
+	}
+}
+
+func NewSiteWithTickets() *SiteWithTickets {
+	return &SiteWithTickets{
+		Site:    NewSite(),
+		Tickets: []Ticket{},
+	}
+}
+
 func GetSiteWithTickets(siteID string) (*SiteWithTickets, error) {
 	fmt.Println(siteID, " sitei1")
 	query := `
 	SELECT
 		sites.id,
 		sites.url,
-		tickets.id AS ticket_id,
+		tickets.id,
 		tickets.user_id,
 		tickets.created_at,
 		tickets.updated_at AS ticket_updated_at,
@@ -32,7 +47,7 @@ func GetSiteWithTickets(siteID string) (*SiteWithTickets, error) {
 	`
 	rows, err := db.DB.Query(query, siteID)
 	if err != nil {
-		return nil, fmt.Errorf("failed to execute query: %v", err)
+		return NewSiteWithTickets(), fmt.Errorf("failed to execute query: %v", err)
 	}
 
 	if rows == nil {
@@ -57,7 +72,7 @@ func GetSiteWithTickets(siteID string) (*SiteWithTickets, error) {
 			&ticket.Content,
 		)
 		if err != nil {
-			return nil, fmt.Errorf("failed to scan row: %v", err)
+			return NewSiteWithTickets(), fmt.Errorf("failed to scan row: %v", err)
 		}
 
 		tickets = append(tickets, ticket)
